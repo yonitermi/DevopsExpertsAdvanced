@@ -1,0 +1,32 @@
+1. Write a YAML file that deploys the following:
+a. two applications that is routed via ingress controller
+b. the application is about cheese store.
+c. the application address is: https://ams.cheese.com
+d. the application will have two deployments:
+i. cheddar
+ii. gauda
+e. setup an ingress controller that will route the following:
+i. https://ams.cheese.com/cedder -> will go to the cheddar deployment
+ii. https://ams.cheese.com/gauda -> will go to the gauda deployment
+2. Mount as config map the attached file to an nginx container under the path
+/usr/share/nginx/html
+3.
+4. BONUS: write your images that will return images of those cheeses and use them in
+your YAML files.
+
+
+
+
+
+
+This YAML file deploys:
+
+1. Two deployments: cheddar and gouda, with placeholder images (your-cheddar-image and your-gouda-image). 
+   You can replace them with the actual image names.
+2. A ConfigMap named nginx-config, which mounts an index.html file to the /usr/share/nginx/html path in the Nginx container.
+3. An Ingress named cheese-ingress that routes the paths /cheddar and /gouda under the host ams.cheese.com to the respective deployments.
+4. Two Services, cheddar and gouda, which expose the deployments internally.
+
+
+To deploy this YAML file, use the appropriate Kubernetes command, such as kubectl apply -f lesson_2.
+Remember to replace the placeholder images with the actual image names for the cheese deployments.

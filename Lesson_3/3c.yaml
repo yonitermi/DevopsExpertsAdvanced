@@ -1,0 +1,25 @@
+# YAML files for splitting the NGINX pod into three different pods, each mounting a specific secret and exposing them with an ingress:
+
+
+# YAML file for Pod 3 (URL):
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod-url
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx
+      volumeMounts:
+        - name: url-volume
+          mountPath: /usr/share/nginx/html
+  volumes:
+    - name: url-volume
+      secret:
+        secretName: db-creds
+        items:
+          - key: url
+            path: url.txt
+
+

@@ -1,0 +1,24 @@
+Assignments
+1. Deploy a new container of SuperSet application
+    (https://hub.docker.com/r/amancevice/superset)
+2. Create service for it and expose it.
+3. Do it with YAML and with scripted way
+4. Deploy also Airflow application and expose it
+    (https://hub.docker.com/r/puckel/docker-airflow/)
+
+Bonus
+
+1. Configure and Deploy the applications with containerized
+    databases
+2. Pass the following environment variable to Airflow:
+    LOAD_EX=y
+
+
+
+
+
+CLI :
+kubectl apply -f superset-deployment.yaml
+kubectl apply -f superset-service.yaml
+kubectl apply -f airflow-deployment.yaml
+kubectl apply -f airflow-service.yaml

@@ -1,0 +1,41 @@
+# configure the ingress separately to expose the pods with the desired URLs
+
+# To configure the ingress and expose the pods with the desired URLs,
+# you would need to create an Ingress resource. Here's an example of how you can configure the ingress:
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+spec:
+  rules:
+    - host: mysql.services.com
+      http:
+        paths:
+          - path: /username
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-pod-username
+                port:
+                  number: 80
+          - path: /password
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-pod-password
+                port:
+                  number: 80
+          - path: /url
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-pod-url
+                port:
+                  number: 80
+
+
+# In this example, the ingress is configured with the host mysql.services.com, 
+# and it has three paths corresponding to the desired URLs (/username, /password, /url). Each path is associated with a specific pod.
+# Make sure to replace nginx-pod-username, nginx-pod-password, and nginx-pod-url with the actual names of your pods that contain the mounted secrets.
+# Once you have the ingress configuration ready, you can apply it to your Kubernetes cluster using the kubectl apply command: 

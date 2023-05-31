@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: superset-deployment
+spec:
+  selector:
+    matchLabels:
+      app: superset
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: superset
+    spec:
+      containers:
+        - name: superset
+          image: amancevice/superset
+          ports:
+            - containerPort: 8088

@@ -1,0 +1,107 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cheese-store
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cheddar
+  namespace: cheese-store
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cheddar
+  template:
+    metadata:
+      labels:
+        app: cheddar
+    spec:
+      containers:
+        - name: cheddar
+          image: your-cheddar-image:latest
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gouda
+  namespace: cheese-store
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gouda
+  template:
+    metadata:
+      labels:
+        app: gouda
+    spec:
+      containers:
+        - name: gouda
+          image: your-gouda-image:latest
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: cheese-store
+data:
+  index.html: |
+    <html>
+      <body>
+        <h1>Welcome to the Cheese Store!</h1>
+      </body>
+    </html>
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cheese-ingress
+  namespace: cheese-store
+spec:
+  rules:
+    - host: ams.cheese.com
+      http:
+        paths:
+          - path: /cheddar
+            pathType: Prefix
+            backend:
+              service:
+                name: cheddar
+                port:
+                  number: 80
+          - path: /gouda
+            pathType: Prefix
+            backend:
+              service:
+                name: gouda
+                port:
+                  number: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cheddar
+  namespace: cheese-store
+spec:
+  selector:
+    app: cheddar
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gouda
+  namespace: cheese-store
+spec:
+  selector:
+    app: gouda
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
